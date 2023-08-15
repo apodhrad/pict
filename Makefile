@@ -17,6 +17,7 @@ OBJS_CLI += cli/common.o cli/cparser.o cli/ctokenizer.o cli/gcd.o
 OBJS_CLI += cli/gcdexcl.o cli/gcdmodel.o cli/model.o cli/mparser.o
 OBJS_CLI += cli/pict.o cli/strings.o
 IMAGE := pict:latest
+IMAGE_REPO ?= quay.io/$(USER)
 
 pict: $(OBJS)
 	$(CXX) $(OBJS) -o $(TARGET)
@@ -42,3 +43,7 @@ image-build:
 
 image-run:
 	@podman run -it --rm -v ./doc/sample-models:/var/pict:Z $(IMAGE) create_volume.txt
+
+image-push: image-build
+	@podman tag $(IMAGE) $(IMAGE_REPO)/$(IMAGE)
+	@podman push $(IMAGE_REPO)/$(IMAGE)

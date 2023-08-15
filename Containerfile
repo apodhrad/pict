@@ -6,17 +6,7 @@
 #                                  
 FROM registry.access.redhat.com/ubi9/toolbox:9.2 as builder
 
-RUN dnf install -y cmake g++ && \
-    mkdir /tmp/pict
-
-COPY ./ /tmp/pict/
-
-RUN cd /tmp/pict/ && \
-    cmake -DCMAKE_BUILD_TYPE=Release -S . -B build && \
-    cmake --build build
-
-# Following steps are used in ubi-micro
-
+# This will be used in ubi-micro
 RUN dnf --installroot=/tmp/ubi-micro \
         --nodocs --setopt=install_weak_deps=False \
         install -y \
@@ -24,7 +14,19 @@ RUN dnf --installroot=/tmp/ubi-micro \
     dnf --installroot=/tmp/ubi-micro \
         clean all
 
-RUN cp /tmp/pict/build/cli/pict /tmp/ubi-micro/usr/local/bin/
+# This is needed to build pict
+RUN dnf install -y cmake g++ && \
+    mkdir /tmp/pict
+
+# Copy repo resources
+COPY ./ /tmp/pict/
+
+# Build the pict
+RUN cd /tmp/pict/ && \
+    rm -rf build && \
+    cmake -DCMAKE_BUILD_TYPE=Release -S . -B build && \
+    cmake --build build && \
+    cp build/cli/pict /tmp/ubi-micro/usr/local/bin/
 
 #  __  __       _       
 # |  \/  | __ _(_)_ __  
