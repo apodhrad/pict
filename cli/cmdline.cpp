@@ -2,7 +2,6 @@
 #include <ctime>
 #include "cmdline.h"
 using namespace std;
-
 //
 // Gets an unsigned integer out of an argument
 // Returns 0 if unsuccessful; args normally don't use zeros so it is OK
@@ -318,7 +317,7 @@ void showUsage()
     wcout << L" /" << charToStr( SWITCH_NEGATIVE_VALUES )   << L":C             - Negative value prefix (default: ~)" << endl;
     wcout << L" /" << charToStr( SWITCH_SEED_FILE )         << L":file          - File with seeding rows"             << endl;
     wcout << L" /" << charToStr( SWITCH_RANDOMIZE )         << L"[:N]           - Randomize generation, N - seed"     << endl;
-    wcout << L" /" << charToStr( SWITCH_FORMAT )            << L"[:text|json]   - Output format (default: text)"     << endl;
+    wcout << L" /" << charToStr( SWITCH_FORMAT )            << L"[:text|json]   - Output format (default: text)"      << endl;
     wcout << L" /" << charToStr( SWITCH_CASE_SENSITIVE )    << L"               - Case-sensitive model evaluation"    << endl;
     wcout << L" /" << charToStr( SWITCH_STATISTICS )        << L"               - Show model statistics"              << endl;
     // there are hidden parameters:
