@@ -10,7 +10,7 @@ FROM registry.access.redhat.com/ubi9/toolbox:9.2 as builder
 RUN dnf --installroot=/tmp/ubi-micro \
         --nodocs --setopt=install_weak_deps=False \
         install -y \
-        libstdc++ && \
+        libstdc++ jq && \
     dnf --installroot=/tmp/ubi-micro \
         clean all
 
